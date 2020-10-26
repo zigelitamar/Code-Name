@@ -18,10 +18,7 @@
   "homepage": "https://github.com/zigelitamar/Code-Name#readme",
   "dependencies": {
     "express": "^4.17.1",
-<<<<<<< HEAD:package.json
     "random-words": "^1.1.1",
-=======
->>>>>>> 55b640c61e8854e27ba5c84c0e69965f6f15687b:server/package.json
     "socket.io": "^2.3.0"
   }
 }
