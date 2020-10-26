@@ -1,0 +1,22 @@
+{
+  "name": "code-name",
+  "version": "1.0.0",
+  "description": "SPA for the box game Code Name",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zigelitamar/Code-Name.git"
+  },
+  "author": "Shiran golzar & Itamar Sigel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zigelitamar/Code-Name/issues"
+  },
+  "homepage": "https://github.com/zigelitamar/Code-Name#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
