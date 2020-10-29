@@ -20,8 +20,11 @@ const nonWordsDictionary = [
   "over",
   "while",
   "else",
+  "of",
+  "any",
+  "each",
 ];
-
+console.log(nonWordsDictionary[5]);
 router.get("/newBoard", (req, res) => {
   board = randomWords(25);
   board.forEach((element) => {
