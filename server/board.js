@@ -34,4 +34,5 @@ router.get("/newBoard", (req, res) => {
   });
   res.send(board);
 });
+router.post("/guess", (req, res) => {});
 module.exports = router;
