@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
+const http = require("http").Server(express());
 const randomWords = require("random-words");
-
+const socketIO = require("socket.io")(http);
 const nonWordsDictionary = [
   "a",
   "an",
@@ -24,6 +25,7 @@ const nonWordsDictionary = [
   "any",
   "each",
 ];
+var gameBoard = {};
 console.log(nonWordsDictionary[5]);
 router.get("/newBoard", (req, res) => {
   board = randomWords(25);
@@ -33,11 +35,12 @@ router.get("/newBoard", (req, res) => {
     }
   });
   b = initBoard(board);
+  gameBoard = b;
   res.send(b);
 });
 
 function initBoard(board) {
-  let dicBoard = [];
+  let dicBoard = {};
   board.forEach((el) => {
     dicBoard[el] = 0;
   });
@@ -48,4 +51,17 @@ function initBoard(board) {
   console.log(dicBoard);
   return dicBoard;
 }
+
+router.post("/guess", (req, res) => {
+  let guess = req.body.guess;
+  if (gameBoard[guess] == 1) {
+    res.send(true);
+  }
+  res.send(false);
+});
+router.post("/clue", (req, res) => {
+  const clue = req.body.clue;
+  const guesses = req.body.num;
+  socketIO.emit("clue", JSON.stringify({ word: clue, num: guesses }));
+});
 module.exports = router;
