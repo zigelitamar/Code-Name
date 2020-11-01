@@ -22,27 +22,30 @@ const nonWordsDictionary = [
   "else",
 ];
 
-router.get("/newBoard", (req, res) => {
+router.get("/newBoard", async (req, res) => {
   board = randomWords(25);
   board.forEach((element) => {
     while (nonWordsDictionary.includes(element)) {
       element = randomWords();
     }
   });
-  b=initBoard(board);
+  b = await initBoard(board);
   res.send(b);
 });
 
-function initBoard(board){
-    let dicBoard=[];
-    board.forEach((el)=>{
-        dicBoard[el]=0;
-    })
-    for(i =0; i<10; i++){
-        let random= Math.floor(Math.random() * Math.floor(25));
-        dicBoard[board[random]]=1;
+async function initBoard(board) {
+  let dicBoard = {};
+  board.forEach((el) => {
+    dicBoard[el] = 0;
+  });
+  for (i = 0; i < 10; ) {
+    let random = Math.floor(Math.random() * Math.floor(25));
+    if (dicBoard[board[random]] == 0) {
+      dicBoard[board[random]] = 1;
+      i++;
     }
-    console.log(dicBoard);
-    return dicBoard;
+  }
+  console.log(dicBoard);
+  return dicBoard;
 }
 module.exports = router;
