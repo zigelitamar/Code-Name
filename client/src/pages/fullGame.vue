@@ -1,6 +1,7 @@
 <template>
   <div class="grid">
-    <div v-if="role==1"> dddddddddd </div>
+    <b-button @click="click">Cliclme!</b-button>
+    <div v-if="role == 1">dddddddddd</div>
 
     <b-row cols="5">
       <b-col v-for="t in tickets" :key="t.id">
@@ -24,32 +25,42 @@ export default {
   },
   data() {
     return {
-      role:0,
+      role: 0,
       tickets: [],
     };
   },
   async created() {
-    this.role= this.$route.params.rolePlayer;
-    const res = await this.axios.get("http://localhost:3000/board/newBoard", {
-      withCredentials: true,
-    });
+    this.role = this.$route.params.rolePlayer;
 
-   let toShow= false;
-    if(this.role==2){
-      toShow=true;
-    }
-    console.log(res);
-    for (const key in res.data) {
-      let element = res.data[key];
-      let obj = {};
-      obj.text = key;
-      obj.sign = element;
-      obj.toShow= toShow;
-      this.tickets.push(obj);
-    }
-    console.log(this.tickets);
+    //  let toShow= false;
+    //   if(this.role==2){
+    //     toShow=true;
+    //   }
+    //   console.log(res);
+    //   for (const key in res.data) {
+    //     let element = res.data[key];
+    //     let obj = {};
+    //     obj.text = key;
+    //     obj.sign = element;
+    //     obj.toShow= toShow;
+    //     this.tickets.push(obj);
+    //   }
+    //   console.log(this.tickets);
   },
   computed: {},
+  sockets: {
+    welcome2(rt) {
+      console.log(rt);
+    },
+  },
+  methods: {
+    setRole(roleNumber) {
+      this.role = roleNumber;
+    },
+    click() {
+      this.$socket.client.emit("response2");
+    },
+  },
 };
 </script>
 

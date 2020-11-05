@@ -1,5 +1,3 @@
-const express = require("express");
-const router = express.Router();
 const randomWords = require("random-words");
 
 const nonWordsDictionary = [
@@ -22,18 +20,17 @@ const nonWordsDictionary = [
   "else",
 ];
 
-router.get("/newBoard", async (req, res) => {
+function createBoard() {
   board = randomWords(25);
   board.forEach((element) => {
     while (nonWordsDictionary.includes(element)) {
       element = randomWords();
     }
   });
-  b = await initBoard(board);
-  res.send(b);
-});
+  return initBoard(board);
+}
 
-async function initBoard(board) {
+function initBoard(board) {
   let dicBoard = {};
   board.forEach((el) => {
     dicBoard[el] = 0;
@@ -48,4 +45,4 @@ async function initBoard(board) {
   console.log(dicBoard);
   return dicBoard;
 }
-module.exports = router;
+module.exports = { createBoard };

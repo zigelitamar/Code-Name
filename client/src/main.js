@@ -1,6 +1,7 @@
 import Vue from "vue";
 import App from "./App.vue";
-import VueSocketIO from "vue-socket.io";
+import VueSocketIO from "vue-socket.io-extended";
+import io from "socket.io-client";
 import axios from "axios";
 import VueAxios from "vue-axios";
 import VueRouter from "vue-router";
@@ -56,14 +57,8 @@ import {
   JumbotronPlugin,
 ].forEach((x) => Vue.use(x));
 Vue.use(VueAxios, axios);
-
-Vue.use(
-  new VueSocketIO({
-    debug: true,
-    connection: "http://metinseylan.com:1992",
-    options: { path: "/my-app/" }, //Optional options
-  })
-);
+const socket = io("http://localhost:3000");
+Vue.use(VueSocketIO, socket);
 new Vue({
   router,
   render: (h) => h(App),
