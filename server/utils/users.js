@@ -1,5 +1,5 @@
 const users = [];
-const rooms = {};
+
 // Join user to a game
 function userJoin(id, username, room) {
   const user = { id, username, room };

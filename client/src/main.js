@@ -34,6 +34,7 @@ import {
   PopoverPlugin,
   SpinnerPlugin,
   TabsPlugin,
+  TablePlugin,
   JumbotronPlugin,
 } from "bootstrap-vue";
 [
@@ -53,9 +54,11 @@ import {
   ButtonGroupPlugin,
   PopoverPlugin,
   SpinnerPlugin,
+  TablePlugin,
   TabsPlugin,
   JumbotronPlugin,
 ].forEach((x) => Vue.use(x));
+
 Vue.use(VueAxios, axios);
 const socket = io("http://localhost:3000");
 Vue.use(VueSocketIO, socket);

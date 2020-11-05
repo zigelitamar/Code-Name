@@ -1,35 +1,14 @@
 <template>
   <div>
-    <b-input-group :prepend="username" class="mt-3">
-      <b-form-input v-model="roomname"></b-form-input>
-      <b-input-group-append>
-        <b-button
-          variant="outline-success"
-          @click="createRoom"
-          :disabled="roomname.length <= 0"
-        >
-          Create Room</b-button
-        >
-      </b-input-group-append>
-    </b-input-group>
-    <b-button @click="joinRoom">Join Game</b-button>
-
-    <b-col>
-      <b-row>
-        <b-dropdown class="mr-sm-2" style="width: 65px" text="choose role">
-          <b-dropdown-item @click="setRole(1)">guesser</b-dropdown-item>
-          <b-dropdown-item @click="setRole(2)">passer</b-dropdown-item>
-        </b-dropdown>
-      </b-row>
-      <br />
-      <b-row>
-        <router-link
-          :to="{ name: 'fullGame', params: { rolePlayer: this.role } }"
-        >
-          <button>Start Game</button>
-        </router-link>
-      </b-row>
-    </b-col>
+    <b-button @click="createGame">Create Game</b-button>
+    <b-button @click="getGames">click me !!!!!!!</b-button>
+    <b-table :items="items" :fields="fields" striped responsive="sm">
+      <template #cell(join)="row">
+        <b-button size="sm" @click="row.toggleDetails" class="mr-2">
+          Join
+        </b-button>
+      </template>
+    </b-table>
   </div>
 </template>
 
@@ -40,10 +19,13 @@ export default {
       username: "Test1",
       roomname: "",
       role: 0,
+      fields: ["room_name", "players", "join"],
+      items: [],
+      isBusy: true,
     };
   },
   sockets: {
-    welcome2(rt) {
+    message(rt) {
       console.log(rt);
     },
   },
@@ -51,13 +33,24 @@ export default {
   methods: {
     createRoom() {
       let username = this.username;
-      let roomname = this.roomname;
-      this.$socket.client.emit("joinGame", { username, roomname });
+      let roomname = "shmooz";
+      this.$socket.client.emit("createGame", { username, roomname });
     },
     joinRoom() {
       let username = this.username;
       let roomname = this.roomname;
       this.$socket.client.emit("joinGame", { username, roomname });
+    },
+    async getGames() {
+      //const res = await this.axios.get(`https://localhost:3000/rooms/getGames`);
+      this.isBusy = !this.isBusy;
+      let gf = [
+        { age: 40, first_name: "Dickerson", last_name: "Macdonald" },
+        { age: 21, first_name: "Larsen", last_name: "Shaw" },
+        { age: 89, first_name: "Geneva", last_name: "Wilson" },
+        { age: 38, first_name: "Jami", last_name: "Carney" },
+      ];
+      this.items.push(...gf);
     },
   },
 };
