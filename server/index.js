@@ -1,53 +1,30 @@
+const { Socket } = require("dgram");
 const express = require("express");
 var app = express();
-const http = require("http");
-const webSocketServer = require("websocket").server;
-const httpServer = http.createServer();
-const board = require("./board");
-const cors = require("cors");
-const idGenerator = require("guid");
-const { Socket } = require("dgram");
-
-const clients = {};
-const games = {};
-
-const wsServer = new webSocketServer({
-  httpServer: httpServer,
-});
-
-wsServer.on("request", (request) => {
-  const connection = request.accept(null, request.origin);
-  connection.on("open", () => console.log("opened!"));
-  connection.on("close", () => console.log("closed!"));
-  connection.on("message", (message) => {});
-
-  //Create a client ID
-  const clientId = idGenerator.create().value;
-  clients[clientId] = {
-    connection: connection,
-  };
-
-  const payLoad = {
-    method: "connect",
-    clientId: clientId,
-  };
-
-  connection.send(JSON.stringify(payLoad));
-});
-
+const http = require("http").createServer(app);
+const io = require("socket.io")(http);
+const { createBoard } = require("./utils/board");
+const {
+  userJoin,
+  getCurrentUser,
+  userLeave,
+  getRoomUsers,
+} = require("./utils/users");
 app.use(express.json());
-const corsConfig = {
-  origin: true,
-  credentials: true,
-};
-
-app.use(cors(corsConfig));
-app.options("*", cors(corsConfig));
-app.use("/board", board);
-
-app.listen(3000, () => {
-  console.log(`Server started on 3001`);
+io.on("connection", (socket) => {
+  socket.emit("welcome", "welcome to the game");
+  socket.on("joinGame", ({ username, room }) => {
+    const user = userJoin(socket.id, username, room);
+    socket.join(room);
+  });
+  socket.on("response", () => {
+    socket.emit("welcome", socket.id);
+  });
+  socket.on("response2", () => {
+    socket.emit("welcome2", socket.id);
+  });
 });
-httpServer.listen(3001, () => {
+
+const server = http.listen(3000, () => {
   console.log(`Server listen on port 3000..`);
 });

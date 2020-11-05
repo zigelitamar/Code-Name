@@ -1,19 +1,23 @@
 <template>
   <div id="app">
-     <router-view />
+    <router-view />
+    <b-button @click="click">Clicl me!</b-button>
   </div>
 </template>
 
 <script>
-// import fullGame from "./pages/fullGame.vue";
-// import menu from "./pages/menu.vue";
-
 export default {
   name: "App",
-  // components: {
-  //   fullGame,
-  //   menu
-  // },
+  sockets: {
+    connect() {
+      console.log("socket connected");
+    },
+  },
+  methods: {
+    click() {
+      this.$socket.client.emit("response");
+    },
+  },
 };
 </script>
 
