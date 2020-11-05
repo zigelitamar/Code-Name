@@ -17,8 +17,11 @@
   },
   "homepage": "https://github.com/zigelitamar/Code-Name#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
+    "guid": "0.0.12",
     "random-words": "^1.1.1",
-    "socket.io": "^2.3.0"
+    "socket.io": "^2.3.0",
+    "websocket": "^1.0.32"
   }
 }
