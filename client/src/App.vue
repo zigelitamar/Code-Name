@@ -1,23 +1,19 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <fullGame msg="Welcome to Your Vue.js App" />
+    <router-view />
   </div>
 </template>
 
 <script>
-import fullGame from "./pages/fullGame.vue";
-import io from "socket.io-client";
+// import fullGame from "./pages/fullGame.vue";
+// import menu from "./pages/menu.vue";
+
 export default {
   name: "App",
-  components: {
-    fullGame,
-  },
-  data() {
-    return {
-      connection: io("http://localhost:3000"),
-    };
-  },
+  // components: {
+  //   fullGame,
+  //   menu
+  // },
 };
 </script>
 

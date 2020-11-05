@@ -5,17 +5,13 @@ import axios from "axios";
 import VueAxios from "vue-axios";
 import VueRouter from "vue-router";
 import VueCookies from "vue-cookies";
+import routes from "./routes";
 Vue.use(VueCookies);
 axios.defaults.withCredentials = true;
 Vue.use(VueRouter);
-import socketio from "socket.io";
-import VueSocketIO from "vue-socket.io";
-
-export const SocketInstance = socketio("http://localhost:3000");
-
-// const router = new VueRouter({
-//   routes,
-// });
+const router = new VueRouter({
+  routes,
+});
 
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
@@ -69,5 +65,6 @@ Vue.use(
   })
 );
 new Vue({
+  router,
   render: (h) => h(App),
 }).$mount("#app");
