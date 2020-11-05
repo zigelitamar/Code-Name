@@ -26,6 +26,7 @@ const nonWordsDictionary = [
   "each",
 ];
 var gameBoard = {};
+
 console.log(nonWordsDictionary[5]);
 router.get("/newBoard", (req, res) => {
   board = randomWords(25);

@@ -8,6 +8,11 @@ import VueCookies from "vue-cookies";
 Vue.use(VueCookies);
 axios.defaults.withCredentials = true;
 Vue.use(VueRouter);
+import socketio from "socket.io";
+import VueSocketIO from "vue-socket.io";
+
+export const SocketInstance = socketio("http://localhost:3000");
+
 // const router = new VueRouter({
 //   routes,
 // });
