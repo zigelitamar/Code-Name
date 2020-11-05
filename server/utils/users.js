@@ -1,9 +1,5 @@
 const users = [];
 
-<<<<<<< HEAD
-=======
-
->>>>>>> d7a8aab11fb8694208a7f8eef1a72d356e799c36
 // Join user to a game
 function userJoin(id, username, room) {
   const user = { id, username, room };
@@ -36,5 +32,5 @@ module.exports = {
   userJoin,
   getCurrentUser,
   userLeave,
-  getRoomUsers
+  getRoomUsers,
 };

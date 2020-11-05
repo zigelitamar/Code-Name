@@ -12,41 +12,38 @@ const {
   getRoomUsers,
 } = require("./utils/users");
 
-const {
-  createRoom,
-  isRoomExsit,
-  joinRoom,
-  getRoom
-}= require("./utils/rooms");
+const { createRoom, isRoomExsit, joinRoom, getRoom } = require("./utils/rooms");
 
-const rooms= require("./utils/rooms");
+const rooms = require("./utils/rooms");
 
 app.use(express.json());
-app.use("/rooms",rooms.router);
+app.use("/rooms", rooms.router);
 
 io.on("connection", (socket) => {
   socket.emit("welcome", "welcome to the game");
 
-  socket.emit("createGame",({username, room})=>{
-    if(isRoomExsit(room)){
-      socket.emit("message",false);
-    }else{
-      const user = userJoin(socket.id, username, room);
-      socket.join(room);
-      socket.emit("massege",true);
+  socket.on("createGame", ({ username, roomname }) => {
+    console.log("trying to create");
+    if (isRoomExsit(roomname)) {
+      socket.emit("message", false);
+    } else {
+      const user = userJoin(socket.id, username, roomname);
+      socket.join(roomname);
+      console.log(user);
+      createRoom(roomname, user);
+      socket.emit("massege", true);
     }
-  })
+  });
   socket.on("joinGame", ({ username, room }) => {
-    var roomTojoin= getRoom(room);
-    if(roomTojoin.players.length<4){
+    var roomTojoin = getRoom(room);
+    if (roomTojoin.players.length < 4) {
       const user = userJoin(socket.id, username, room);
       socket.join(room);
       joinRoom(room.name, user);
       socket.emit("message", true);
-    }else{
-      socket.emit("message",false);
+    } else {
+      socket.emit("message", false);
     }
-
   });
   socket.on("response", () => {
     socket.emit("welcome", socket.id);

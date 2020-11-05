@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-button @click="createGame">Create Game</b-button>
+    <b-button @click="createRoom">Create Game</b-button>
     <b-button @click="getGames">click me !!!!!!!</b-button>
     <b-table :items="items" :fields="fields" striped responsive="sm">
       <template #cell(join)="row">
@@ -42,15 +42,9 @@ export default {
       this.$socket.client.emit("joinGame", { username, roomname });
     },
     async getGames() {
-      //const res = await this.axios.get(`https://localhost:3000/rooms/getGames`);
-      this.isBusy = !this.isBusy;
-      let gf = [
-        { age: 40, first_name: "Dickerson", last_name: "Macdonald" },
-        { age: 21, first_name: "Larsen", last_name: "Shaw" },
-        { age: 89, first_name: "Geneva", last_name: "Wilson" },
-        { age: 38, first_name: "Jami", last_name: "Carney" },
-      ];
-      this.items.push(...gf);
+      const res = await this.axios.get(`https://localhost:3000/rooms/getGames`);
+
+      this.items.push(...res.data);
     },
   },
 };
